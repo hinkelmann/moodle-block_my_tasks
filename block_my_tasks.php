@@ -188,10 +188,6 @@ class block_my_tasks extends block_base
      */
     protected function filterBar()
     {
-        $defaultstatus = null;
-        if (isset($_COOKIE['filterStatus'])) {
-            $defaultstatus = $_COOKIE['filterStatus'];
-        }
         return html_writer::tag('form',
             html_writer::div(html_writer::span(get_string('filterby', 'block_my_tasks'), '')
                 . html_writer::select([
@@ -199,9 +195,9 @@ class block_my_tasks extends block_base
                     's-0day' => get_string('filtertoday', 'block_my_tasks'),
                     's-1day' => get_string('filtertomorrow', 'block_my_tasks'),
                     's-3day' => get_string('filterending3days', 'block_my_tasks'),
-                ], get_string('situation', 'block_my_tasks'), $defaultstatus, ['' => get_string('situation', 'block_my_tasks')], [
+                ], get_string('situation', 'block_my_tasks'), null, ['' => get_string('situation', 'block_my_tasks')], [
                     'data-placeholder' => get_string('situation', 'block_my_tasks'),
-                    'class' => 'filter-task-situation block-my-tasks-float-right',
+                    'class' => 'block-my-tasks-filter-situation block-my-tasks-float-right',
                 ])), ['class' => 'block-my-tasks-form-filter']
         );
     }

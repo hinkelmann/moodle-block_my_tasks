@@ -24,7 +24,6 @@
  */
 class block_my_tasks_test extends advanced_testcase
 {
-
     /**
      * Dumb tests
      * @return void

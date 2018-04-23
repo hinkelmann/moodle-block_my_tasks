@@ -19,23 +19,16 @@
  * @copyright  2017 Luiz Guilherme Dall Acqua <luizguilherme@nte.ufsm.br>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-define(['require', 'jquery', 'block_my_tasks/jquery.cookie'],
-    function (require, $, Cookie) {
+define(['require', 'jquery'],
+    function (require, $) {
         return {
             init: function (param) {
                 var stakTaks = $('.block-my-tasks-col-row');
                 var st = $('.block-my-tasks-col-rownothing');
-                var filterInput = $(".filter-task-select, .filter-task-situation");
-                var cStatus = Cookie.get('filterStatus');
+                var filterInput = $(".block-my-tasks-filter-situation");
                 filterInput.change(function () {
                     filter();
-                    console.log(this);
                 });
-
-                $('.filter-task-situation').change(function () {
-                    Cookie.set('filterStatus', this.value, {expires: 0.1});
-                });
-
                 function filter() {
                     var dt = new Date();
                     var filter = getValueSituation();
@@ -79,12 +72,13 @@ define(['require', 'jquery', 'block_my_tasks/jquery.cookie'],
                             break;
                     }
                 }
+
                 /**
                  * Extract value from filter-task-situation
                  * @returns {*}
                  */
                 function getValueSituation() {
-                    var $fs = $('.filter-task-situation').val();
+                    var $fs = filterInput.val();
                     $fs = typeof($fs) == 'undefined' || $fs == '' ? '*' : $fs;
                     return $fs;
                 }
