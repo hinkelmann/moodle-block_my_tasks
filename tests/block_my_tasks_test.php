@@ -15,11 +15,11 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Block to view all avalitive activities
+ * Block to view all pending activities
  *
  * @package    block_my_tasks
  * @category   blocks
- * @copyright  2017
+ * @copyright  2017 Luiz Guilherme Dall Acqua <luizguilherme@nte.ufsm.br>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class block_my_tasks_test extends advanced_testcase
