@@ -1,0 +1,85 @@
+
+.block-my-tasks-col-header-1,
+.block-my-tasks-col-header-2,
+.block-my-tasks-col-header-3,
+.block-my-tasks-col-content-3,
+.block-my-tasks-col-title,
+.block-my-tasks-col-header-row  {
+    font-weight: bold;
+}
+
+.block-my-tasks-col-header-1,
+.block-my-tasks-col-header-2,
+.block-my-tasks-col-header-3,
+.block-my-tasks-col-content-1,
+.block-my-tasks-col-content-2,
+.block-my-tasks-col-content-3 {
+    vertical-align: middle;
+    display: table-cell;
+}
+.block-my-tasks-col-header-1,
+.block-my-tasks-col-header-3,
+.block-my-tasks-col-content-1,
+.block-my-tasks-col-content-3 {
+    max-width: 70px;
+    padding: 5px;
+}
+.block-my-tasks-col-header-2,
+.block-my-tasks-col-content-2 {
+    width: 100%;
+}
+
+.block-my-tasks-form-filter {
+    margin-bottom: 20px;
+}
+
+.block-my-tasks-float-right {
+    position: relative;
+    float: right;
+}
+
+.block-my-tasks-col-subtitle {
+    font-style: italic;
+    font-size: smaller;
+}
+.block-my-tasks-col-row, .block-my-tasks-col-rownothing {
+    display: block;
+    width: 100%;
+    background-color: #fff;
+    margin-top: 6px;
+}
+
+.block-my-tasks-col-header-row {
+    padding: 15px;
+    background-color: #fff;
+    margin-top: 8px;
+}
+
+.block-my-tasks-col-row, .col-.block-my-tasks-col-rownothing, .block-my-tasks-col-header-row {
+    color: #333;
+}
+
+.block-my-tasks-col-row:hover {
+    text-decoration: none;
+    background-color: #fcfcfc;
+}
+
+.block-my-tasks-bell {
+    width: 30px !important;;
+}
+
+.block-my-tasks-bell-blue {
+    fill: #2196f3;
+}
+
+.block-my-tasks-bell-red {
+    fill: #ea3358
+}
+
+.block-my-tasks-bell-green {
+    fill: #009f83
+}
+
+.block-my-tasks-bell-yellow {
+    fill: #ecb116
+}
