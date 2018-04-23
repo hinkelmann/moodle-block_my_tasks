@@ -15,6 +15,8 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
+ * Block to view all pending activities
+ *
  * @package    block_my_tasks
  * @category   blocks
  * @copyright  2017 Luiz Guilherme Dall Acqua <luizguilherme@nte.ufsm.br>
@@ -23,6 +25,8 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version   = 2016052300;
-$plugin->requires  = 2016051900;
 $plugin->component = 'block_my_tasks';
+$plugin->version  = 2018040100;
+$plugin->requires = 2016051900;
+$plugin->maturity  = MATURITY_STABLE;
+$plugin->release  = '1.0';
