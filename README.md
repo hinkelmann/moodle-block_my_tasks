@@ -33,7 +33,6 @@ Post instalation
 ----------------
 After you have installed the block you just add it into dashboard or the moodle course
 
-//image1// && //image2//
 
 Credits
 ----------------
