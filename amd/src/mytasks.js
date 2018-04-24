@@ -20,22 +20,26 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 define(['require', 'jquery'],
-    function (require, $) {
+    function(require, $) {
         return {
-            init: function (param) {
+            init: function() {
                 var stakTaks = $('.block-my-tasks-col-row');
                 var st = $('.block-my-tasks-col-rownothing');
                 var filterInput = $(".block-my-tasks-filter-situation");
-                filterInput.change(function () {
+                filterInput.change(function() {
                     filter();
                 });
+
+                /**
+                 *  Filter and apply function
+                 */
                 function filter() {
                     var dt = new Date();
                     var filter = getValueSituation();
                     dt.setHours(0, 0, 0, 0);
                     switch (filter) {
                         case '*':
-                            stakTaks.slideUp(700).filter(function () {
+                            stakTaks.slideUp(700).filter(function() {
                                 return true;
                             }).slideDown(800);
                             break;
@@ -48,7 +52,7 @@ define(['require', 'jquery'],
                             }).slideDown(800);
                             break;
                         case 's-1day':
-                            stakTaks.slideUp(700).filter(function () {
+                            stakTaks.slideUp(700).filter(function() {
                                 var dt2 = new Date();
                                 dt2.setDate(dt2.getDate() + 1);
                                 dt2.setHours(23, 59, 59, 999);
@@ -58,7 +62,7 @@ define(['require', 'jquery'],
                             }).slideDown(800);
                             break;
                         case 's-3day':
-                            stakTaks.slideUp(700).filter(function () {
+                            stakTaks.slideUp(700).filter(function() {
                                 var dt2 = new Date();
                                 dt2.setDate(dt2.getDate() + 3);
                                 dt2.setHours(23, 59, 59, 999);
@@ -67,8 +71,9 @@ define(['require', 'jquery'],
                             }).slideDown(800);
                             break;
                         default:
-                            if (filter != '')
+                            if (filter != '') {
                                 stakTaks.slideUp(700).filter('.' + filter).slideDown(800);
+                            }
                             break;
                     }
                 }
@@ -87,16 +92,14 @@ define(['require', 'jquery'],
                  * Show or Hide message for zero activities
                  */
                 function existItens() {
-                    setInterval(
-                        function () {
-                            $('.block-my-tasks-col-row:hidden').length == $('.block-my-tasks-col-row').length ?
-                                st.slideDown(800) : st.slideUp(800);
-                        }, 100
-                    )
+                    setInterval(function () {
+                        $('.block-my-tasks-col-row:hidden').length == $('.block-my-tasks-col-row').length ?
+                            st.slideDown(800) : st.slideUp(800);
+                    }, 100);
                 }
 
                 filter();
                 existItens();
             }
-        }
+        };
     });

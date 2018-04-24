@@ -15,8 +15,9 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
+ * Install function
+ *
  * @package    block_my_tasks
- * @category   blocks
  * @copyright  2017 Luiz Guilherme Dall Acqua <luizguilherme@nte.ufsm.br>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -24,10 +25,10 @@
 defined('MOODLE_INTERNAL') || die();
 /**
  *  Handles install instances of this block.
+ *
  * @return bool
  */
-function xmldb_block_my_tasks_install()
-{
+function xmldb_block_my_tasks_install() {
     global $CFG, $DB;
     $obj = new stdClass();
     $obj->name = "";
@@ -36,67 +37,72 @@ function xmldb_block_my_tasks_install()
     $obj->leftjoin = "";
     $obj->wheremodule = [];
 
-    //where statement based database type
+    // Where statement based database type.
     if ($CFG->dbtype == 'pgsql') {
         $obj->wheredb = " AND to_timestamp({$CFG->prefix}user_enrolments.timestart) <= now() ";
-        $obj->wheredb .= " AND ({$CFG->prefix}user_enrolments.timeend = 0 OR to_timestamp({$CFG->prefix}user_enrolments.timeend) >= now())";
+        $obj->wheredb .= " AND ({$CFG->prefix}user_enrolments.timeend = 0 ";
+        $obj->wheredb .= " OR to_timestamp({$CFG->prefix}user_enrolments.timeend) >= now())";
     } else if ($CFG->dbtype == 'mariadb' or $CFG->dbtype == 'mysql') {
         $obj->wheredb = " AND {$CFG->prefix}user_enrolments.timestart <= now() ";
-        $obj->wheredb .= " AND ({$CFG->prefix}user_enrolments.timeend = 0 OR {$CFG->prefix}user_enrolments.timeend >= now())";
+        $obj->wheredb .= " AND ({$CFG->prefix}user_enrolments.timeend = 0 ";
+        $obj->wheredb .= " OR {$CFG->prefix}user_enrolments.timeend >= now())";
     } else {
         return false;
     }
-    $modules = "'assign','choice','feedback','forum','lesson','quiz','scorm','data','workshop','glossary','questionnaire','ouwiki','game','hotpot'";
+    $modules = "'assign','choice','feedback','forum','lesson','quiz','scorm','data','workshop',";
+    $modules .= "'glossary','questionnaire','ouwiki','game','hotpot'";
     $modulelist = $DB->get_fieldset_select("modules", 'name', "name in ($modules)");
     foreach ($modulelist as $modulename) {
         switch ($modulename) {
             case 'assign':
-                $obj = setSqlPart($obj, $modulename, "duedate", "cutoffdate");
+                $obj = set_sql_part($obj, $modulename, "duedate", "cutoffdate");
                 break;
             case 'forum':
-                $obj = setSqlPart($obj, $modulename, "assesstimefinish");
+                $obj = set_sql_part($obj, $modulename, "assesstimefinish");
                 break;
             case 'lesson':
-                $obj = setSqlPart($obj, $modulename, "deadline");
+                $obj = set_sql_part($obj, $modulename, "deadline");
                 break;
             case 'data':
-                $obj = setSqlPart($obj, $modulename, "timeavailableto");
+                $obj = set_sql_part($obj, $modulename, "timeavailableto");
                 break;
             case 'workshop':
-                $obj = setSqlPart($obj, $modulename, "submissionend");
+                $obj = set_sql_part($obj, $modulename, "submissionend");
                 break;
             case 'glossary':
-                $obj = setSqlPart($obj, $modulename, "assesstimefinish");
+                $obj = set_sql_part($obj, $modulename, "assesstimefinish");
                 break;
             case 'questionnaire':
-                $obj = setSqlPart($obj, $modulename, "closedate");
+                $obj = set_sql_part($obj, $modulename, "closedate");
                 break;
             case 'ouwiki':
-                $obj = setSqlPart($obj, $modulename, "editend");
+                $obj = set_sql_part($obj, $modulename, "editend");
                 break;
             default:
-                $obj = setSqlPart($obj, $modulename);
+                $obj = set_sql_part($obj, $modulename);
                 break;
         }
     }
     $obj->wheremodule = implode(" OR ", $obj->wheremodule);
-    //Execute create view
+
+    // Execute create view.
     $DB->execute("DROP VIEW IF EXISTS {$CFG->prefix}view_activities");
-    if ($DB->execute(generateSql($obj))) {
+    if ($DB->execute(get_sql($obj))) {
         return true;
     }
     return false;
 }
 
 /**
+ * Return objct with sql parts
+ *
  * @param stdClass $obj
  * @param string $module
  * @param string $timeclose
  * @param boolean|string $deadline
  * @return stdClass $obj
  */
-function setSqlPart($obj, $module, $timeclose = 'timeclose', $deadline = false)
-{
+function set_sql_part($obj, $module, $timeclose = 'timeclose', $deadline = false) {
     global $CFG;
 
     if ($deadline === false) {
@@ -116,11 +122,10 @@ function setSqlPart($obj, $module, $timeclose = 'timeclose', $deadline = false)
 
 /**
  * Return SQL
- * @param stdClass $sqlPart
+ * @param stdClass $sqlpart
  * @return string
  */
-function generateSql(stdClass $sqlPart)
-{
+function get_sql(stdClass $sqlpart) {
     global $CFG;
     return "CREATE OR REPLACE VIEW {$CFG->prefix}view_activities AS
       SELECT
@@ -133,10 +138,9 @@ function generateSql(stdClass $sqlPart)
         {$CFG->prefix}user.id                 AS user_id,
         {$CFG->prefix}role_assignments.roleid AS role_id,
         {$CFG->prefix}modules.name            AS type,
-        CASE {$sqlPart->name}         ELSE NULL END  AS activity_name,
-        CASE {$sqlPart->timeclose}    ELSE NULL END AS timeclose,
-        CASE {$sqlPart->deadline}     ELSE NULL END AS deadline
-        
+        CASE {$sqlpart->name}         ELSE NULL END  AS activity_name,
+        CASE {$sqlpart->timeclose}    ELSE NULL END AS timeclose,
+        CASE {$sqlpart->deadline}     ELSE NULL END AS deadline
       FROM {$CFG->prefix}course_modules
         INNER JOIN {$CFG->prefix}course            ON {$CFG->prefix}course.id               = {$CFG->prefix}course_modules.course
         INNER JOIN {$CFG->prefix}course_categories ON {$CFG->prefix}course_categories.id    = {$CFG->prefix}course.category
@@ -145,18 +149,17 @@ function generateSql(stdClass $sqlPart)
         INNER JOIN {$CFG->prefix}enrol             ON {$CFG->prefix}enrol.courseid          = {$CFG->prefix}course_modules.course
         INNER JOIN {$CFG->prefix}user_enrolments   ON {$CFG->prefix}user_enrolments.enrolid = {$CFG->prefix}enrol.id
         INNER JOIN {$CFG->prefix}user              ON {$CFG->prefix}user.id                 = {$CFG->prefix}user_enrolments.userid
-        
-        LEFT JOIN {$CFG->prefix}context ON ( 
+        LEFT JOIN {$CFG->prefix}context ON (
           {$CFG->prefix}context.instanceid = {$CFG->prefix}course.id
           AND {$CFG->prefix}context.contextlevel = 50
         )
         LEFT JOIN {$CFG->prefix}role_assignments ON (
-          {$CFG->prefix}role_assignments.contextid = {$CFG->prefix}context.id 
+          {$CFG->prefix}role_assignments.contextid = {$CFG->prefix}context.id
           AND {$CFG->prefix}role_assignments.userid = {$CFG->prefix}user.id
         )
-        {$sqlPart->leftjoin}
+        {$sqlpart->leftjoin}
       WHERE
         {$CFG->prefix}course.visible = 1  AND {$CFG->prefix}course_modules.visible = 1 AND {$CFG->prefix}course_sections.visible = 1
-        {$sqlPart->wheredb} AND ( {$sqlPart->wheremodule} )";
+        {$sqlpart->wheredb} AND ( {$sqlpart->wheremodule} )";
 }
 

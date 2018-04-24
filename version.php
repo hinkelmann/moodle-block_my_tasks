@@ -13,17 +13,15 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+defined('MOODLE_INTERNAL') || die();
 
 /**
- * Block to view all pending activities
+ * Version file
  *
  * @package    block_my_tasks
- * @category   blocks
  * @copyright  2017 Luiz Guilherme Dall Acqua <luizguilherme@nte.ufsm.br>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
-defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'block_my_tasks';
 $plugin->version  = 2018040100;

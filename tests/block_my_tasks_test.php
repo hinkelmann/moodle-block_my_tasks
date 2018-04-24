@@ -14,11 +14,12 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
+defined('MOODLE_INTERNAL') || die();
+
 /**
- * Block to view all pending activities
+ * Test class
  *
  * @package    block_my_tasks
- * @category   blocks
  * @copyright  2017 Luiz Guilherme Dall Acqua <luizguilherme@nte.ufsm.br>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */

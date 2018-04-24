@@ -15,8 +15,9 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
+ * Uninstall function
+ *
  * @package    block_my_tasks
- * @category   blocks
  * @copyright  2017 Luiz Guilherme Dall Acqua <luizguilherme@nte.ufsm.br>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -26,10 +27,12 @@ defined('MOODLE_INTERNAL') || die();
  *  Handles uninstall instances of this block.
  * @return bool
  */
-function xmldb_block_my_tasks_uninstall()
-{
+function xmldb_block_my_tasks_uninstall() {
+
     global $CFG, $DB;
-    if($DB->execute("DROP VIEW IF EXISTS {$CFG->prefix}view_activities")){
+    $executed = $DB->execute("DROP VIEW IF EXISTS {$CFG->prefix}view_activities");
+
+    if ($executed) {
         return true;
     };
     return false;

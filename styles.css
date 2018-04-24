@@ -1,10 +1,9 @@
-
 .block-my-tasks-col-header-1,
 .block-my-tasks-col-header-2,
 .block-my-tasks-col-header-3,
 .block-my-tasks-col-content-3,
 .block-my-tasks-col-title,
-.block-my-tasks-col-header-row  {
+.block-my-tasks-col-header-row {
     font-weight: bold;
 }
 
@@ -17,6 +16,7 @@
     vertical-align: middle;
     display: table-cell;
 }
+
 .block-my-tasks-col-header-1,
 .block-my-tasks-col-header-3,
 .block-my-tasks-col-content-1,
@@ -24,6 +24,7 @@
     max-width: 70px;
     padding: 5px;
 }
+
 .block-my-tasks-col-header-2,
 .block-my-tasks-col-content-2 {
     width: 100%;
@@ -42,7 +43,9 @@
     font-style: italic;
     font-size: smaller;
 }
-.block-my-tasks-col-row, .block-my-tasks-col-rownothing {
+
+.block-my-tasks-col-row,
+.block-my-tasks-col-rownothing {
     display: block;
     width: 100%;
     background-color: #fff;
@@ -55,7 +58,9 @@
     margin-top: 8px;
 }
 
-.block-my-tasks-col-row, .col-.block-my-tasks-col-rownothing, .block-my-tasks-col-header-row {
+.block-my-tasks-col-row,
+.col-.block-my-tasks-col-rownothing,
+.block-my-tasks-col-header-row {
     color: #333;
 }
 
@@ -65,7 +70,7 @@
 }
 
 .block-my-tasks-bell {
-    width: 30px !important;;
+    width: 30px;
 }
 
 .block-my-tasks-bell-blue {
@@ -73,13 +78,13 @@
 }
 
 .block-my-tasks-bell-red {
-    fill: #ea3358
+    fill: #ea3358;
 }
 
 .block-my-tasks-bell-green {
-    fill: #009f83
+    fill: #009f83;
 }
 
 .block-my-tasks-bell-yellow {
-    fill: #ecb116
+    fill: #ecb116;
 }
